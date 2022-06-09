@@ -1,28 +1,71 @@
-const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const router = require("express").Router();
+const { json } = require("express/lib/response");
+const { Tag, Product, ProductTag, Category } = require("../../models");
 
 // The `/api/tags` endpoint
 
-router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
+//=================Find All tags
+// be sure to include its associated Product data
+router.get("/", (req, res) => {
+  Tag.findAll({
+    include: [{ model: Product }],
+  }).then((tagData) => {
+    res.json(tagData);
+  });
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+//=================Find a single Tag by its id
+// be sure to include its associated Product data
+router.get("/:id", (req, res) => {
+  Tag.findByPk(req.params.id, {
+    incldue: [{ model: Product }],
+  })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
-router.post('/', (req, res) => {
-  // create a new tag
+//=================Create a new tag
+router.post("/", (req, res) => {
+  Tag.create(req.body).then((newTag) => {
+    res.json(newTag);
+  });
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+//=================Update a Tag's name by its id value
+router.put("/:id", (req, res) => {
+  Tag.update(
+    {
+      Tag_name: req.body.Tag_name,
+    },
+    {
+      id: req.params.id,
+    }
+  )
+    .then((updatedTag) => {
+      res.json(updatedTag);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
-router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
+//=================Delete a tag by its id value
+router.delete("/:id", (req, res) => {
+  Tag.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((deletedTag) => {
+      res.json(deletedTag);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 module.exports = router;
