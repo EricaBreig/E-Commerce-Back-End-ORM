@@ -10,7 +10,7 @@
 In this assignment, we were given an e-commerce database with starter code, and needed to add the necessary functions to complete the API routes, and the models to get the server fully running, so that it can be tested using insomnia.
 The following skills were utilized:
 - Creating API rotues using Express, sequelize and MySQL2 
-- Utilizing PUT, POST, and DELETE in Insomnia
+- Utilizing GET, PUT, POST, and DELETE in Insomnia
 
 ## User-Story
 
