@@ -39,16 +39,19 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
   Tag.update(
     {
-      Tag_name: req.body.Tag_name,
+      tag_name: req.body.tag_name,
     },
     {
-      id: req.params.id,
+      where: {
+        id: req.params.id,
+      },
     }
   )
     .then((updatedTag) => {
       res.json(updatedTag);
     })
     .catch((err) => {
+      console.log(err);
       res.json(err);
     });
 });
